@@ -1,0 +1,59 @@
+{
+  "description": "",
+  "duration": 25200.0,
+  "ended_at": "2026-01-04T16:00:00Z",
+  "estimated_distance_nm": null,
+  "id": "<pk>",
+  "legs": [
+    {
+      "duration": 7200.0,
+      "ended_at": "2026-01-04T12:00:00Z",
+      "id": "<pk>",
+      "journey": "<fk>",
+      "name": "Out to Diamond Harbour",
+      "notes": "",
+      "started_at": "2026-01-04T10:00:00Z",
+      "statistics": {
+        "avg_speed_knots": 5.17,
+        "by_mode": {
+          "Sailing": {
+            "avg_speed_knots": 5.17,
+            "distance_nm": 4.38,
+            "duration_seconds": 7200,
+            "max_speed_knots": 6.0
+          }
+        },
+        "max_speed_knots": 6.0,
+        "total_distance_nm": 4.38,
+        "total_duration_seconds": 7200
+      }
+    }
+  ],
+  "manual_route": null,
+  "name": "Saturday Sail",
+  "notes": "",
+  "started_at": "2026-01-04T09:00:00Z",
+  "statistics": {
+    "avg_speed_knots": 5.17,
+    "by_mode": {
+      "Motoring": {
+        "avg_speed_knots": 5.0,
+        "distance_nm": 0.0,
+        "duration_seconds": 3600,
+        "max_speed_knots": 5.0
+      },
+      "Sailing": {
+        "avg_speed_knots": 5.17,
+        "distance_nm": 4.38,
+        "duration_seconds": 14400,
+        "max_speed_knots": 6.0
+      }
+    },
+    "max_speed_knots": 6.0,
+    "total_distance_nm": 4.38,
+    "total_duration_seconds": 25200
+  },
+  "vessel": "<fk>",
+  "vessel_name": "Moana",
+  "weather_station": null
+}

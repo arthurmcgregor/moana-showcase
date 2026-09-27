@@ -1,0 +1,15 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "created_at": "2026-01-01T00:00:00Z",
+      "email": "alice@example.com",
+      "first_name": "Alice",
+      "id": "<pk>",
+      "last_name": "Smith",
+      "notes": ""
+    }
+  ]
+}

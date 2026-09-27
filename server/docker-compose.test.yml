@@ -1,0 +1,32 @@
+# Ephemeral PostGIS database for running the test suite in isolation.
+#
+# Runs on host port 5434 — clear of the dev DB on 5436 and of 5432, which
+# frequently conflicts with other local Postgres instances / SSH tunnels — and
+# stores its data in tmpfs, so
+# every `up` starts from a clean, fast, in-memory database with no persistent
+# volume to leak state between runs. See scripts/run-tests.sh.
+#
+# Its own compose project, so it never appears as an "orphan" of the dev database
+# in this same directory (moana-dev) and can never be swept up by --remove-orphans.
+name: moana-test
+
+services:
+  test-db:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+    environment:
+      POSTGRES_DB: moana
+      POSTGRES_USER: moana_user
+      POSTGRES_PASSWORD: moana_test
+    ports:
+      - "5434:5432"
+    tmpfs:
+      - /var/lib/postgresql
+    volumes:
+      - ./initdb-test.sh:/docker-entrypoint-initdb.d/10-postgis.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 3s
+      retries: 15

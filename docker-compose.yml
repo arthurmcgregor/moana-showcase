@@ -1,0 +1,58 @@
+services:
+  db:
+    restart: unless-stopped
+    build:
+      context: ./server
+      dockerfile: db.Dockerfile
+    mem_limit: 512m       # postgis; idles ~50MiB, headroom for spatial queries
+    env_file:
+      - prod.env
+      - secret.env
+    ports:
+      - "${DB_PORT:-127.0.0.1:5432}:5432"
+    volumes:
+      - ${DB_VOLUME_SOURCE:-prod_db_data}:/var/lib/postgresql
+      - ./server/initdb-postgis.sh:/docker-entrypoint-initdb.d/10-postgis.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    restart: unless-stopped
+    build:
+      context: ./server
+    mem_limit: 512m       # app server; idles ~200MiB, headroom for request load
+    env_file:
+      - prod.env
+      - secret.env
+    ports:
+      - "${WEB_PORT:-127.0.0.1:8000}:8000"
+    volumes:
+      - ${MEDIA_VOLUME_SOURCE:-media_data}:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    restart: unless-stopped
+    mem_limit: 128m       # static nginx; idles ~7MiB
+    build:
+      context: ./frontend
+      args:
+        # Route device calls through the same-origin Django proxy (#92): the
+        # HTTPS app can't fetch the HTTP-only device directly (mixed content).
+        VITE_DEVICE_SERVER_BASE_URL: https://moana.example.com/api/tracks/device
+        VITE_WEB_SERVER_BASE_URL: https://moana.example.com
+        VITE_MAPBOX_ACCESS_TOKEN: ${VITE_MAPBOX_ACCESS_TOKEN}
+    ports:
+      - "${FRONTEND_PORT:-127.0.0.1:8080}:80"
+    depends_on:
+      - web
+
+volumes:
+  prod_db_data:
+  media_data:

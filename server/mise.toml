@@ -1,0 +1,16 @@
+[tools]
+# Pinned to match the existing .venv (see requirements.txt). Bumping this without
+# recreating the venv leaves the mise shim pointing at a Python with no packages.
+python = "3.14.2"
+
+[env]
+_.python.venv = { path = ".venv", create = true }
+_.file = ".env"
+
+[tasks.test]
+description = "Run the server test suite against an isolated PostGIS DB (port 5434)"
+run = "scripts/run-tests.sh"
+
+[tasks."test:down"]
+description = "Stop and remove the ephemeral test database"
+run = "scripts/run-tests.sh --down"

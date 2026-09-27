@@ -1,0 +1,17 @@
+.venv/
+.git/
+__pycache__/
+*.py[cod]
+.env
+
+moana/media/
+moana/staticfiles/
+
+mise.toml
+pyrightconfig.json
+CLAUDE.md
+.claude/
+
+Dockerfile
+docker-compose*.yml
+.dockerignore

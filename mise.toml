@@ -1,0 +1,86 @@
+# --- Local development ---------------------------------------------------------
+#
+# The dev database is server/docker-compose.yml (port 5436, persistent volume).
+# The repo-root docker-compose.yml is the production-shaped stack and is not used
+# locally; the test suite brings up its own throwaway DB on 5434 (`mise run test`
+# from server/). Everything below funnels through scripts/dev.sh.
+
+[tasks."dev:setup"]
+description = "One-time setup: env files, Python venv, npm packages (idempotent)"
+run = "scripts/dev-setup.sh"
+
+[tasks.dev]
+description = "Run the stack: PostGIS + Django (:8000) + Vite (:5173). Ctrl-C stops all"
+run = "scripts/dev.sh"
+
+[tasks."dev:db"]
+description = "Start the dev database only and leave it running"
+run = "scripts/dev.sh db"
+
+[tasks."dev:admin"]
+description = "Create/refresh the local admin account (DEV_ADMIN_* in server/.env)"
+run = "scripts/dev.sh admin"
+
+[tasks."dev:down"]
+description = "Stop the dev database"
+run = "scripts/dev.sh down"
+
+[tasks."server:dev"]
+description = "Django dev server only (starts the database and migrates first)"
+run = "scripts/dev.sh server"
+
+[tasks."frontend:dev"]
+description = "Vite dev server only"
+run = "scripts/dev.sh frontend"
+
+# --- Firmware --------------------------------------------------------------------
+
+[tasks."watch:build"]
+run = ["pio run"]
+dir = "watch"
+
+[tasks."watch:flash"]
+run = ["pio run --target upload"]
+dir = "watch"
+
+[tasks."watch:monitor"]
+run = ["pio device monitor"]
+dir = "watch"
+
+[tasks."device:build"]
+run = ["pio run -e m5stack-cores3"]
+dir = "device"
+
+[tasks."device:flash"]
+run = ["pio run -e m5stack-cores3 --target upload"]
+dir = "device"
+
+[tasks."device:monitor"]
+run = ["pio device monitor -e m5stack-cores3"]
+dir = "device"
+
+# --- Frontend build / device deploy -----------------------------------------------
+
+[tasks."frontend:build"]
+run = ["npm run build"]
+dir = "frontend"
+
+[tasks."frontend:copy"]
+run = """
+DEST_DIR="device/data/frontend"
+SRC_DIR="frontend/dist"
+
+# Ensure destination directory exists
+mkdir -p "$DEST_DIR"
+
+# Remove old files safely
+rm -rf "$DEST_DIR"/*
+
+# Copy files, preserving attributes
+cp -a "$SRC_DIR/." "$DEST_DIR/"
+
+# Remove stats.html if it exists
+rm -f "$DEST_DIR/stats.html"
+
+echo "Frontend files copied to $DEST_DIR"
+"""

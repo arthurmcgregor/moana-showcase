@@ -1,0 +1,15 @@
+/device/.cache
+/device/.pio
+/watch/.cache
+/watch/.pio
+/device/data
+device/compile_commands.json
+device/downloaded
+/server/moana/moana/__pycache__
+/server/moana/tracks/__pycache__
+/server/moana/tracks/migrations/__pycache__
+__pycache__/
+/device/tools/.venv
+mise.local.toml
+secret.env
+frontend/public/wind.csv

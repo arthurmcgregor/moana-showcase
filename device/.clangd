@@ -1,0 +1,15 @@
+CompileFlags:
+  CompilationDatabase: .
+  Remove:
+    - "-mlongcalls"
+    - "-fno-tree-switch-conversion"
+    - "-fstrict-volatile-bitfields"
+    - "-fno-jump-tables"
+    - "-freorder-blocks"
+    - "-fstack-protector"
+  Compiler: clang++
+Diagnostics:
+  UnusedIncludes: None
+  Suppress:
+    - "pp_file_not_found"
+    - "drv_unknown_argument"

@@ -1,0 +1,377 @@
+<title>Moana Watch — Screen Mockups v3</title>
+<style>
+  :root {
+    --page: #f3f4f2;
+    --ink: #1c2024;
+    --ink-soft: #5a6068;
+    --card: #ffffff;
+    --line: #dcdfda;
+    --accent: #2e7d74;
+    /* watch UI — fixed, AMOLED world */
+    --glass: #000000;
+    --bezel: #23262a;
+    --w-text: #ffffff;
+    --w-dim: #aab1ba;
+    --w-faint: #59606a;
+    --w-rec: #ff4d4f;
+    --w-ok: #34d178;
+    --w-amber: #ffb648;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --page:#15171a; --ink:#e8eaec; --ink-soft:#9aa1a9; --card:#1d2024; --line:#2e3237; --accent:#4db6a9; }
+  }
+  :root[data-theme="dark"] { --page:#15171a; --ink:#e8eaec; --ink-soft:#9aa1a9; --card:#1d2024; --line:#2e3237; --accent:#4db6a9; }
+  :root[data-theme="light"] { --page:#f3f4f2; --ink:#1c2024; --ink-soft:#5a6068; --card:#ffffff; --line:#dcdfda; --accent:#2e7d74; }
+
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    line-height: 1.5;
+    padding: 3rem 2rem 5rem;
+  }
+  main { max-width: 1500px; margin: 0 auto; }
+  h1 { font-size: 1.7rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.2rem; }
+  .sub { color: var(--ink-soft); margin-bottom: 2.5rem; max-width: 65ch; }
+  h2 {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--accent); margin: 3rem 0 1.2rem; padding-top: 1.2rem; border-top: 1px solid var(--line);
+  }
+  .row { display: flex; gap: 2rem; overflow-x: auto; padding-bottom: 1rem; align-items: flex-start; }
+  figure { flex: 0 0 auto; margin: 0; }
+  figcaption { max-width: 330px; margin-top: 0.9rem; font-size: 0.85rem; color: var(--ink-soft); }
+  figcaption b { color: var(--ink); font-weight: 600; }
+
+  /* ---- watch frame: native 410x502 panel, ~70px glass corner ---- */
+  .watch {
+    width: 410px; height: 502px;
+    background: var(--glass);
+    border-radius: 78px;
+    border: 7px solid var(--bezel);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    position: relative;
+    color: var(--w-text);
+    font-variant-numeric: tabular-nums;
+    display: flex; flex-direction: column; align-items: center;
+    overflow: hidden;
+  }
+  .scaled { zoom: 0.72; }
+
+  .head {
+    display: flex; align-items: center; gap: 16px;
+    margin-top: 34px; font-size: 24px; color: var(--w-dim); font-weight: 500;
+  }
+  .head svg { display: block; }
+
+  .mid { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
+  .foot-space { height: 44px; }
+
+  /* pager — only visible mid-swipe */
+  .pager { display: flex; gap: 10px; margin-bottom: 30px; }
+  .pager i { width: 9px; height: 9px; border-radius: 50%; background: var(--w-faint); }
+  .pager i.on { background: var(--w-text); }
+
+  /* speed */
+  .speed-val { font-size: 180px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+  .unit { font-size: 28px; color: var(--w-dim); margin-top: 4px; letter-spacing: 0.08em; }
+  .speed-foot { display: flex; align-items: baseline; gap: 40px; margin-top: 40px; }
+  .mode-chip { font-size: 30px; font-weight: 700; letter-spacing: 0.14em; color: var(--w-amber); }
+  .sec-val { font-size: 30px; color: var(--w-text); font-weight: 600; }
+  .sec-val .k { color: var(--w-dim); font-weight: 500; margin-right: 10px; font-size: 24px; letter-spacing: 0.1em; }
+
+  /* mode picker — rows sized for wet fingers, scrolls under the header */
+  .mode-list { width: 330px; margin-top: 6px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+  .mode-row {
+    height: 64px; border-radius: 32px; border: 1px solid var(--w-faint);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 600; letter-spacing: 0.07em; color: var(--w-dim);
+  }
+  .mode-row.on { border: 2px solid var(--w-amber); color: var(--w-amber); background: rgba(255, 182, 72, 0.2); }
+  .mode-row.queued { border: 2px solid var(--w-amber); color: var(--w-amber); }
+
+  /* nav — all white for sunlight */
+  .cog-val { font-size: 150px; font-weight: 600; line-height: 1; }
+  .nav-label { font-size: 26px; color: var(--w-text); letter-spacing: 0.18em; margin-top: 2px; opacity: 0.85; }
+  .hdg { font-size: 56px; font-weight: 500; color: var(--w-text); margin-top: 36px; }
+
+  /* stats */
+  .leg-prev { font-size: 24px; color: var(--w-faint); display: flex; gap: 20px; align-items: center; margin-bottom: 18px; }
+  .leg-head { display: flex; align-items: baseline; gap: 22px; margin-bottom: 22px; }
+  .leg-num { font-size: 34px; font-weight: 700; color: var(--w-amber); letter-spacing: 0.06em; }
+  .leg-mode { font-size: 26px; color: var(--w-dim); letter-spacing: 0.12em; }
+  .leg-time { font-size: 50px; font-weight: 600; }
+  .grid { display: grid; grid-template-columns: auto auto; gap: 12px 30px; font-size: 38px; }
+  .grid .k { color: var(--w-dim); font-size: 26px; align-self: baseline; padding-top: 10px; letter-spacing: 0.1em; }
+  .grid .v { font-weight: 600; text-align: right; }
+  .total { font-size: 24px; color: var(--w-faint); margin-top: 26px; }
+
+  /* control */
+  .state-lab { font-size: 40px; font-weight: 700; letter-spacing: 0.06em; display: flex; align-items: center; gap: 16px; }
+  .state-lab.idle { color: var(--w-dim); }
+  .state-lab.rec { color: var(--w-rec); }
+  .state-lab.pend { color: var(--w-amber); }
+  .hold-btn {
+    margin-top: 36px; width: 290px; height: 92px; border-radius: 46px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 700; letter-spacing: 0.1em; position: relative;
+  }
+  .hold-btn.start { background: #0d3524; color: var(--w-ok); border: 3px solid var(--w-ok); }
+  .hold-btn.stop { background: #3a1113; color: var(--w-rec); border: 3px solid var(--w-rec); }
+  .hold-btn.disabled { background: #17191c; color: var(--w-faint); border: 3px solid var(--w-faint); }
+  .hold-fill {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 62%;
+    background: rgba(52, 209, 120, 0.28); border-radius: 46px 0 0 46px;
+  }
+  .ctl-meta { margin-top: 44px; font-size: 28px; color: var(--w-dim); text-align: center; line-height: 1.7; }
+  .ctl-meta b { color: var(--w-text); font-weight: 600; }
+
+  .legend { display: flex; gap: 2.5rem; flex-wrap: wrap; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.4rem; }
+  .legend .item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--ink-soft); }
+  .legend .chip { background: #000; border-radius: 8px; padding: 6px 8px; display: flex; }
+</style>
+
+<!-- header icon sprites -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- SD card = recording to storage -->
+    <symbol id="sd" viewBox="0 0 24 24">
+      <path d="M8 2h9a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7l3-5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M9 5v3M12 5v3M15 5v3" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <!-- boat-link = telemetry from boat unit: antenna dot + broadcast arcs -->
+    <symbol id="link" viewBox="0 0 24 24">
+      <circle cx="12" cy="17" r="2.6" fill="currentColor"/>
+      <path d="M7.2 12.2a7 7 0 0 1 9.6 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M4 8.6a12 12 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <!-- slash overlay for "off / lost" -->
+    <symbol id="slash" viewBox="0 0 24 24">
+      <path d="M3 21 21 3" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main>
+  <h1>Moana watch — carousel mockups v3</h1>
+  <p class="sub">Native 410 × 502 AMOLED panel, ~70 px glass corners, shown at 72%. v3: lap → <b>leg</b> throughout; link icon now signal-arcs (satellite glyph retired); Control screen shows last-packet age on every state, mode line dropped, no-link layout aligned with the rest.</p>
+
+  <div class="legend">
+    <span class="item"><span class="chip"><svg width="22" height="22" style="color:#ffffff"><use href="#sd"/></svg></span> SD white = recording</span>
+    <span class="item"><span class="chip"><svg width="22" height="22" style="color:#59606a"><use href="#sd"/></svg></span> SD grey = idle</span>
+    <span class="item"><span class="chip"><svg width="22" height="22" style="color:#ffffff"><use href="#link"/></svg></span> signal white = link ok</span>
+    <span class="item"><span class="chip"><svg width="22" height="22" style="color:#ffb648"><use href="#link"/></svg></span> amber = stale &gt;3 s</span>
+    <span class="item"><span class="chip" style="position:relative"><svg width="22" height="22" style="color:#59606a"><use href="#link"/></svg><svg width="22" height="22" style="color:#ff4d4f;position:absolute"><use href="#slash"/></svg></span> slashed = lost &gt;10 s</span>
+  </div>
+
+  <h2>Carousel — a ring: Speed ⇄ Mode ⇄ Control ⇄ Stats ⇄ Speed</h2>
+  <p class="sub">Swipe left from Speed for Mode, right for Stats; Control closes the loop between them, so the screen you touch least is the furthest from the readout either way round. Speed is the boot tile. Nav (#141) takes a column in the ring when it lands.</p>
+  <div class="row">
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:41
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#sd"/></svg>
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#link"/></svg>
+          78%
+        </div>
+        <div class="mid">
+          <div class="speed-val">6.4</div>
+          <div class="unit">knots</div>
+          <div class="speed-foot">
+            <span class="mode-chip">SAIL</span>
+            <span class="sec-val"><span class="k">10s</span>6.9</span>
+          </div>
+        </div>
+        <div class="foot-space"></div>
+      </div>
+      <figcaption><b>Speed</b> — instantaneous SOG always; mode chip plus one secondary value. Vertical scroll cycles the secondary: 10s → max → avg → off.</figcaption>
+    </figure>
+
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:41
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#sd"/></svg>
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#link"/></svg>
+          78%
+        </div>
+        <div class="mode-list">
+          <div class="mode-row">SAIL</div>
+          <div class="mode-row">MOTORSAIL</div>
+          <div class="mode-row">MOTOR</div>
+          <div class="mode-row">ROW</div>
+          <div class="mode-row">UNPOWERED</div>
+          <div class="mode-row on">ANCHOR</div>
+          <div class="mode-row queued">ALONGSIDE</div>
+        </div>
+      </div>
+      <figcaption><b>Mode</b> — all ten server modes, one 64px row each for wet fingers; vertical scroll reaches the rest (issue #146). The filled row is the boat's echo, an outlined row is a tap still queued. A tap queues the mode event, buzzes, and returns to Speed, where the chip confirms on the echo. The GPIO0 buttons keep the SAIL↔MOTOR / OTHER quick path.</figcaption>
+    </figure>
+
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:41
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#sd"/></svg>
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#link"/></svg>
+          78%
+        </div>
+        <div class="mid">
+          <div class="cog-val">214°</div>
+          <div class="nav-label">COG</div>
+          <div class="hdg">HDG 208°</div>
+        </div>
+        <div class="foot-space"></div>
+      </div>
+      <figcaption><b>Nav</b> — COG and HDG only, all white at max brightness. Sunlight legibility on real glass goes on this slice's hardware checklist.</figcaption>
+    </figure>
+
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:41
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#sd"/></svg>
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#link"/></svg>
+          78%
+        </div>
+        <div class="mid">
+          <div class="state-lab rec">RECORDING</div>
+          <div class="hold-btn stop">HOLD TO STOP</div>
+          <div class="ctl-meta">last packet <b>0.8 s</b> ago<br>queue <b>0</b> pending</div>
+        </div>
+        <div class="foot-space"></div>
+      </div>
+      <figcaption><b>Control</b> — recording state echoed by boat, hold-to-confirm, last-packet age + queue depth. Mode lives on its own tile.</figcaption>
+    </figure>
+
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:41
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#sd"/></svg>
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#link"/></svg>
+          78%
+        </div>
+        <div class="mid">
+          <div class="leg-prev">▲ LEG 2 · MOTOR · 14:02 · 1.8 nm</div>
+          <div class="leg-head"><span class="leg-num">LEG 3</span><span class="leg-mode">SAIL</span><span class="leg-time">12:44</span></div>
+          <div class="grid">
+            <span class="k">DIST</span><span class="v">2.4 nm</span>
+            <span class="k">AVG</span><span class="v">5.8 kn</span>
+            <span class="k">MAX</span><span class="v">7.2 kn</span>
+            <span class="k">10s</span><span class="v">6.9 kn</span>
+          </div>
+          <div class="total">session 8.1 nm · 1:32</div>
+        </div>
+        <div class="foot-space"></div>
+      </div>
+      <figcaption><b>Stats</b> — leg cut on every mode change; PWR click = manual cut re-asserting current mode. Each leg carries its mode. Vertical scroll browses past legs (LEG 2 peeking). Session total pinned. Matches the frontend's existing leg concept (issue #93).</figcaption>
+    </figure>
+
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:41
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#sd"/></svg>
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#link"/></svg>
+          78%
+        </div>
+        <div class="mid">
+          <div class="speed-val" style="opacity:.85">6.4</div>
+          <div class="unit">knots</div>
+          <div class="speed-foot">
+            <span class="mode-chip">SAIL</span>
+            <span class="sec-val"><span class="k">10s</span>6.9</span>
+          </div>
+        </div>
+        <div class="pager"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <figcaption><b>Mid-swipe</b> — pager dots visible only during a horizontal swipe, fade ~1 s after release. The ring has no first or last tile, so the dots show position in the strip, not progress through it.</figcaption>
+    </figure>
+  </div>
+
+  <h2>Control screen — five states</h2>
+  <div class="row">
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:41
+          <svg width="26" height="26" style="color:var(--w-faint)"><use href="#sd"/></svg>
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#link"/></svg>
+          78%
+        </div>
+        <div class="mid">
+          <div class="state-lab idle">IDLE</div>
+          <div class="hold-btn start">HOLD TO START</div>
+          <div class="ctl-meta">last packet <b>0.4 s</b> ago<br>queue <b>0</b> pending</div>
+        </div>
+        <div class="foot-space"></div>
+      </div>
+      <figcaption><b>1 · Idle</b> — SD grey, boat echoes not-recording.</figcaption>
+    </figure>
+
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:41
+          <svg width="26" height="26" style="color:var(--w-faint)"><use href="#sd"/></svg>
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#link"/></svg>
+          78%
+        </div>
+        <div class="mid">
+          <div class="state-lab idle">IDLE</div>
+          <div class="hold-btn start"><span class="hold-fill"></span>KEEP HOLDING…</div>
+          <div class="ctl-meta">last packet <b>0.6 s</b> ago<br>queue <b>0</b> pending</div>
+        </div>
+        <div class="foot-space"></div>
+      </div>
+      <figcaption><b>2 · Holding</b> — 1 s fill sweep; release early = nothing sent.</figcaption>
+    </figure>
+
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:41
+          <svg width="26" height="26" style="color:var(--w-faint)"><use href="#sd"/></svg>
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#link"/></svg>
+          78%
+        </div>
+        <div class="mid">
+          <div class="state-lab pend">STARTING…</div>
+          <div class="hold-btn disabled">SENT</div>
+          <div class="ctl-meta">last packet <b>0.2 s</b> ago<br>queue <b>0</b> pending</div>
+        </div>
+        <div class="foot-space"></div>
+      </div>
+      <figcaption><b>3 · Pending</b> — resent 1/s until echo flips; 10 s timeout back to Idle with error buzz.</figcaption>
+    </figure>
+
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:41
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#sd"/></svg>
+          <svg width="26" height="26" style="color:var(--w-text)"><use href="#link"/></svg>
+          78%
+        </div>
+        <div class="mid">
+          <div class="state-lab rec">RECORDING</div>
+          <div class="hold-btn stop">HOLD TO STOP</div>
+          <div class="ctl-meta">last packet <b>0.8 s</b> ago<br>queue <b>0</b> pending</div>
+        </div>
+        <div class="foot-space"></div>
+      </div>
+      <figcaption><b>4 · Recording</b> — SD white on every screen; destructive stop stays behind the hold.</figcaption>
+    </figure>
+
+    <figure>
+      <div class="watch scaled">
+        <div class="head">12:38
+          <svg width="26" height="26" style="color:var(--w-faint)"><use href="#sd"/></svg>
+          <span style="position:relative;display:flex">
+            <svg width="26" height="26" style="color:var(--w-faint)"><use href="#link"/></svg>
+            <svg width="26" height="26" style="color:var(--w-rec);position:absolute;left:0;top:0"><use href="#slash"/></svg>
+          </span>
+          78%
+        </div>
+        <div class="mid">
+          <div class="state-lab idle">NO LINK</div>
+          <div class="hold-btn disabled">— — —</div>
+          <div class="ctl-meta">last packet <b>4 m</b> ago<br>queue <b>2</b> pending</div>
+        </div>
+        <div class="foot-space"></div>
+      </div>
+      <figcaption><b>5 · No link</b> — signal slashed, control disabled (boat state unknown). Same layout as every other state; last-packet age carries the story.</figcaption>
+    </figure>
+  </div>
+</main>

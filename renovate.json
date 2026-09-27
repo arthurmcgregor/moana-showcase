@@ -1,0 +1,61 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "dependencyDashboard": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 5am on monday"]
+  },
+  "packageRules": [
+    {
+      "description": "Ignore patch updates for JS devDependencies only (server security patches still flow through)",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch"],
+      "enabled": false
+    },
+    {
+      "description": "Group all @types/* packages",
+      "groupName": "TypeScript type definitions",
+      "matchPackageNames": ["/^@types//"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "description": "Group tsconfig bases",
+      "groupName": "TSConfig bases",
+      "matchPackageNames": ["/^@tsconfig//"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "description": "Group Vue ecosystem (vue core, router, vitejs plugins)",
+      "groupName": "Vue ecosystem",
+      "matchPackageNames": [
+        "vue",
+        "vue-router",
+        "/^@vue//",
+        "/^@vitejs//"
+      ]
+    },
+    {
+      "description": "Group charting libraries",
+      "groupName": "Charting libraries",
+      "matchPackageNames": ["chart.js", "vue-chartjs"]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "PlatformIO lib_deps pinned as owner/repo@^x.y.z",
+      "managerFilePatterns": ["/(^|/)platformio\\.ini$/"],
+      "matchStrings": [
+        "(?<depName>[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)@\\^?(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    }
+  ]
+}

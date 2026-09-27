@@ -1,0 +1,14 @@
+[
+  {
+    "duration": null,
+    "ended_at": null,
+    "id": "<pk>",
+    "is_currently_aboard": true,
+    "notes": "",
+    "person": "<fk>",
+    "person_name": "Alice Smith",
+    "started_at": "2026-01-04T09:00:00Z",
+    "vessel": "<fk>",
+    "vessel_name": "Moana"
+  }
+]

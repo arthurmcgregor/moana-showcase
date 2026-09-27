@@ -1,0 +1,35 @@
+# Local development database — persistent PostGIS, driven by scripts/dev.sh.
+#
+# Every value is interpolated from server/.env (compose reads it automatically), so
+# that file is the single source of truth for both this container and host-side
+# Django. The host port defaults to 5436 because 5432 is contested on most dev
+# machines (other Postgres installs, SSH tunnels, the repo-root stack).
+#
+# The other two compose files: docker-compose.test.yml is the throwaway test DB
+# (project moana-test, port 5434); the repo-root docker-compose.yml is the
+# production-shaped stack and is not used for local work.
+name: moana-dev
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-moana}
+      POSTGRES_USER: ${POSTGRES_USER:-moana_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secure_password}
+    ports:
+      - "${POSTGRES_PORT:-5436}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql
+      - ./initdb-postgis.sh:/docker-entrypoint-initdb.d/10-postgis.sh:ro
+    # scripts/dev.sh waits on this before running migrations.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  db_data:

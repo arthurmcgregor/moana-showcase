@@ -1,0 +1,80 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          172.72,
+          -43.6
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "altitude": null,
+        "course": null,
+        "hdop": null,
+        "heading": null,
+        "heel": null,
+        "id": "<pk>",
+        "satellites": null,
+        "speed": 5.0,
+        "timestamp": "2026-01-04T10:00:00+00:00",
+        "track_id": "<fk>",
+        "trim": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          172.68,
+          -43.62
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "altitude": null,
+        "course": null,
+        "hdop": null,
+        "heading": null,
+        "heel": null,
+        "id": "<pk>",
+        "satellites": null,
+        "speed": 6.0,
+        "timestamp": "2026-01-04T11:00:00+00:00",
+        "track_id": "<fk>",
+        "trim": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          172.63,
+          -43.63
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "altitude": null,
+        "course": null,
+        "hdop": null,
+        "heading": null,
+        "heel": null,
+        "id": "<pk>",
+        "satellites": null,
+        "speed": 4.5,
+        "timestamp": "2026-01-04T12:00:00+00:00",
+        "track_id": "<fk>",
+        "trim": null
+      },
+      "type": "Feature"
+    }
+  ],
+  "properties": {
+    "journey_id": "<fk>",
+    "journey_name": "Saturday Sail",
+    "vessel_id": "<fk>",
+    "vessel_name": "Moana"
+  },
+  "type": "FeatureCollection"
+}

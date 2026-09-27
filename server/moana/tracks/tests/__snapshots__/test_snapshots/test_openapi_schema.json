@@ -1,0 +1,6947 @@
+{
+  "components": {
+    "schemas": {
+      "Aboard": {
+        "properties": {
+          "duration": {
+            "description": "Duration in seconds",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "ended_at": {
+            "description": "When the person went ashore (None = still aboard)",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "is_currently_aboard": {
+            "readOnly": true,
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "person": {
+            "type": "integer"
+          },
+          "person_name": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the person came aboard",
+            "format": "date-time",
+            "type": "string"
+          },
+          "vessel": {
+            "type": "integer"
+          },
+          "vessel_name": {
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "duration",
+          "id",
+          "is_currently_aboard",
+          "person",
+          "person_name",
+          "started_at",
+          "vessel",
+          "vessel_name"
+        ],
+        "type": "object"
+      },
+      "Annotation": {
+        "properties": {
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "metadata": {},
+          "notes": {
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeEnum"
+          },
+          "type_display": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "vessel": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "timestamp",
+          "type",
+          "type_display",
+          "vessel"
+        ],
+        "type": "object"
+      },
+      "ChecklistState": {
+        "properties": {
+          "selected_tags": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "Item": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "done": {
+            "type": "boolean"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "name": {
+            "maxLength": 255,
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "created_at",
+          "id",
+          "name",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "Journey": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "distance_nm": {
+            "description": "On-water distance in nautical miles",
+            "format": "double",
+            "readOnly": true,
+            "type": "number"
+          },
+          "duration": {
+            "description": "Duration in seconds",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "ended_at": {
+            "description": "When the journey ended (None = ongoing)",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "estimated_distance_nm": {
+            "description": "Estimated distance from manual_route in nautical miles",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "legs_count": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "manual_route": {
+            "nullable": true
+          },
+          "name": {
+            "description": "Name of the journey",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the journey started",
+            "format": "date-time",
+            "type": "string"
+          },
+          "vessel": {
+            "type": "integer"
+          },
+          "weather_station": {
+            "description": "Preferred weather station for this journey",
+            "nullable": true,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "distance_nm",
+          "duration",
+          "estimated_distance_nm",
+          "id",
+          "legs_count",
+          "name",
+          "started_at",
+          "vessel"
+        ],
+        "type": "object"
+      },
+      "JourneyDetail": {
+        "description": "Detailed journey serializer with nested legs and per-leg statistics.",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "duration": {
+            "description": "Duration in seconds",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "ended_at": {
+            "description": "When the journey ended (None = ongoing)",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "estimated_distance_nm": {
+            "description": "Estimated distance from manual_route in nautical miles",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "legs": {
+            "items": {
+              "$ref": "#/components/schemas/LegDetail"
+            },
+            "readOnly": true,
+            "type": "array"
+          },
+          "manual_route": {
+            "nullable": true
+          },
+          "name": {
+            "description": "Name of the journey",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the journey started",
+            "format": "date-time",
+            "type": "string"
+          },
+          "statistics": {
+            "additionalProperties": {},
+            "nullable": true,
+            "readOnly": true,
+            "type": "object"
+          },
+          "vessel": {
+            "type": "integer"
+          },
+          "vessel_name": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "weather_station": {
+            "description": "Preferred weather station for this journey",
+            "nullable": true,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "duration",
+          "estimated_distance_nm",
+          "id",
+          "legs",
+          "name",
+          "started_at",
+          "statistics",
+          "vessel",
+          "vessel_name"
+        ],
+        "type": "object"
+      },
+      "Leg": {
+        "properties": {
+          "duration": {
+            "description": "Duration in seconds",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "ended_at": {
+            "description": "When the leg ended (None = ongoing)",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "journey": {
+            "type": "integer"
+          },
+          "name": {
+            "description": "Name of the leg",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the leg started",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "duration",
+          "id",
+          "journey",
+          "name",
+          "started_at"
+        ],
+        "type": "object"
+      },
+      "LegDetail": {
+        "description": "Leg serializer with computed statistics.",
+        "properties": {
+          "duration": {
+            "description": "Duration in seconds",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "ended_at": {
+            "description": "When the leg ended (None = ongoing)",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "journey": {
+            "type": "integer"
+          },
+          "name": {
+            "description": "Name of the leg",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the leg started",
+            "format": "date-time",
+            "type": "string"
+          },
+          "statistics": {
+            "additionalProperties": {},
+            "nullable": true,
+            "readOnly": true,
+            "type": "object"
+          }
+        },
+        "required": [
+          "duration",
+          "id",
+          "journey",
+          "name",
+          "started_at",
+          "statistics"
+        ],
+        "type": "object"
+      },
+      "MeResponse": {
+        "properties": {
+          "is_admin": {
+            "type": "boolean"
+          },
+          "username": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "is_admin",
+          "username"
+        ],
+        "type": "object"
+      },
+      "Mode": {
+        "properties": {
+          "duration": {
+            "description": "Duration in seconds",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "ended_at": {
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "metadata": {},
+          "mode": {
+            "$ref": "#/components/schemas/ModeEnum"
+          },
+          "mode_display": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "started_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "vessel": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "duration",
+          "ended_at",
+          "id",
+          "mode",
+          "mode_display",
+          "started_at",
+          "vessel"
+        ],
+        "type": "object"
+      },
+      "ModeEnum": {
+        "description": "* `SAIL` - Sailing\n* `MOTORSAIL` - Motor Sailing\n* `MOTOR` - Motoring\n* `ROW` - Rowing\n* `UNPOWERED` - Drifting/Unpowered\n* `ANCHOR` - Anchored\n* `ALONGSIDE` - Alongside/Docked\n* `BEACHED` - Beached\n* `TRAILERED` - On Trailer\n* `OTHER` - Other",
+        "enum": [
+          "SAIL",
+          "MOTORSAIL",
+          "MOTOR",
+          "ROW",
+          "UNPOWERED",
+          "ANCHOR",
+          "ALONGSIDE",
+          "BEACHED",
+          "TRAILERED",
+          "OTHER"
+        ],
+        "type": "string"
+      },
+      "PaginatedAboardList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/Aboard"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedAnnotationList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/Annotation"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedItemList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedJourneyList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/Journey"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedLegList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/Leg"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedModeList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/Mode"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedPersonList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedTagList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedTrackList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/Track"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedTrackPointList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/TrackPoint"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedVesselList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/Vessel"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedWeatherObservationList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/WeatherObservation"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PaginatedWeatherStationList": {
+        "properties": {
+          "count": {
+            "example": 123,
+            "type": "integer"
+          },
+          "next": {
+            "example": "http://api.example.org/accounts/?page=4",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "example": "http://api.example.org/accounts/?page=2",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/WeatherStation"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object"
+      },
+      "PatchedAboard": {
+        "properties": {
+          "duration": {
+            "description": "Duration in seconds",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "ended_at": {
+            "description": "When the person went ashore (None = still aboard)",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "is_currently_aboard": {
+            "readOnly": true,
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "person": {
+            "type": "integer"
+          },
+          "person_name": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the person came aboard",
+            "format": "date-time",
+            "type": "string"
+          },
+          "vessel": {
+            "type": "integer"
+          },
+          "vessel_name": {
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedAnnotation": {
+        "properties": {
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "metadata": {},
+          "notes": {
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeEnum"
+          },
+          "type_display": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "vessel": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedChecklistState": {
+        "properties": {
+          "selected_tags": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedItem": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "done": {
+            "type": "boolean"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "name": {
+            "maxLength": 255,
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedJourney": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "distance_nm": {
+            "description": "On-water distance in nautical miles",
+            "format": "double",
+            "readOnly": true,
+            "type": "number"
+          },
+          "duration": {
+            "description": "Duration in seconds",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "ended_at": {
+            "description": "When the journey ended (None = ongoing)",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "estimated_distance_nm": {
+            "description": "Estimated distance from manual_route in nautical miles",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "legs_count": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "manual_route": {
+            "nullable": true
+          },
+          "name": {
+            "description": "Name of the journey",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the journey started",
+            "format": "date-time",
+            "type": "string"
+          },
+          "vessel": {
+            "type": "integer"
+          },
+          "weather_station": {
+            "description": "Preferred weather station for this journey",
+            "nullable": true,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedLeg": {
+        "properties": {
+          "duration": {
+            "description": "Duration in seconds",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "ended_at": {
+            "description": "When the leg ended (None = ongoing)",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "journey": {
+            "type": "integer"
+          },
+          "name": {
+            "description": "Name of the leg",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the leg started",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedMode": {
+        "properties": {
+          "duration": {
+            "description": "Duration in seconds",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true,
+            "type": "number"
+          },
+          "ended_at": {
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "metadata": {},
+          "mode": {
+            "$ref": "#/components/schemas/ModeEnum"
+          },
+          "mode_display": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "started_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "vessel": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedPerson": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "email": {
+            "format": "email",
+            "maxLength": 254,
+            "type": "string"
+          },
+          "first_name": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "last_name": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedTag": {
+        "properties": {
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "name": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "parent": {
+            "nullable": true,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedTrack": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "ended_at": {
+            "description": "When the track recording ended",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "imported_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "name": {
+            "description": "Optional name for the track",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "points_count": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "source_filename": {
+            "description": "original device filename this track was imported from",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the track recording started",
+            "format": "date-time",
+            "type": "string"
+          },
+          "vessel": {
+            "description": "Vessel this track belongs to (can be assigned later)",
+            "nullable": true,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedVessel": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "name": {
+            "description": "Name of the vessel",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "vessel_type": {
+            "description": "Type of vessel (e.g., dinghy, yacht, kayak)",
+            "maxLength": 100,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedWeatherObservation": {
+        "properties": {
+          "gust_speed": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "humidity": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "rain_accumulated": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "station": {
+            "type": "integer"
+          },
+          "temperature": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "tide_observation": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "wind_direction": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "wind_speed": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "PatchedWeatherStation": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "location": {
+            "description": "WKT point, e.g. SRID=4326;POINT (lng lat)",
+            "nullable": true,
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 255,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Person": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "email": {
+            "format": "email",
+            "maxLength": 254,
+            "type": "string"
+          },
+          "first_name": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "last_name": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "created_at",
+          "first_name",
+          "id",
+          "last_name"
+        ],
+        "type": "object"
+      },
+      "Tag": {
+        "properties": {
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "name": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "parent": {
+            "nullable": true,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object"
+      },
+      "Track": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "ended_at": {
+            "description": "When the track recording ended",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "imported_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "name": {
+            "description": "Optional name for the track",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "points_count": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "source_filename": {
+            "description": "original device filename this track was imported from",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the track recording started",
+            "format": "date-time",
+            "type": "string"
+          },
+          "vessel": {
+            "description": "Vessel this track belongs to (can be assigned later)",
+            "nullable": true,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "imported_at",
+          "points_count",
+          "started_at"
+        ],
+        "type": "object"
+      },
+      "TrackDetail": {
+        "description": "Detailed track serializer with nested points.",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "ended_at": {
+            "description": "When the track recording ended",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "imported_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "name": {
+            "description": "Optional name for the track",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/TrackPoint"
+            },
+            "readOnly": true,
+            "type": "array"
+          },
+          "source_filename": {
+            "description": "original device filename this track was imported from",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When the track recording started",
+            "format": "date-time",
+            "type": "string"
+          },
+          "vessel": {
+            "description": "Vessel this track belongs to (can be assigned later)",
+            "nullable": true,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "imported_at",
+          "points",
+          "started_at"
+        ],
+        "type": "object"
+      },
+      "TrackPoint": {
+        "properties": {
+          "altitude": {
+            "description": "Altitude in meters",
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "course": {
+            "description": "Course over ground in degrees",
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "hdop": {
+            "description": "Horizontal dilution of precision",
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "heading": {
+            "description": "Magnetic heading in degrees, 0–360",
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "heel": {
+            "description": "Boat heel angle in degrees, + to starboard",
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "location": {
+            "description": "WKT point, e.g. SRID=4326;POINT (lng lat)",
+            "type": "string"
+          },
+          "satellites": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "nullable": true,
+            "type": "integer"
+          },
+          "speed": {
+            "description": "Speed in m/s or km/h",
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "timestamp": {
+            "description": "Timestamp of the GPS point",
+            "format": "date-time",
+            "type": "string"
+          },
+          "track": {
+            "type": "integer"
+          },
+          "trim": {
+            "description": "Boat trim angle in degrees, + bow up",
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "location",
+          "timestamp",
+          "track"
+        ],
+        "type": "object"
+      },
+      "TrackUploadResponse": {
+        "properties": {
+          "ended_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "modes_created": {
+            "type": "integer"
+          },
+          "points_created": {
+            "type": "integer"
+          },
+          "started_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "track_id": {
+            "type": "integer"
+          },
+          "track_name": {
+            "type": "string"
+          },
+          "vessel_id": {
+            "nullable": true,
+            "type": "integer"
+          },
+          "vessel_name": {
+            "nullable": true,
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "ended_at",
+          "points_created",
+          "started_at",
+          "success",
+          "track_id",
+          "track_name",
+          "vessel_id",
+          "vessel_name"
+        ],
+        "type": "object"
+      },
+      "TypeEnum": {
+        "description": "* `TACK` - Tack\n* `GYBE` - Gybe\n* `COURSE_CHANGE` - Course Change\n* `NOTE` - General Note",
+        "enum": [
+          "TACK",
+          "GYBE",
+          "COURSE_CHANGE",
+          "NOTE"
+        ],
+        "type": "string"
+      },
+      "Vessel": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "name": {
+            "description": "Name of the vessel",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "vessel_type": {
+            "description": "Type of vessel (e.g., dinghy, yacht, kayak)",
+            "maxLength": 100,
+            "type": "string"
+          }
+        },
+        "required": [
+          "created_at",
+          "id",
+          "name"
+        ],
+        "type": "object"
+      },
+      "WeatherObservation": {
+        "properties": {
+          "gust_speed": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "humidity": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "rain_accumulated": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "station": {
+            "type": "integer"
+          },
+          "temperature": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "tide_observation": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "wind_direction": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          },
+          "wind_speed": {
+            "format": "double",
+            "nullable": true,
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "station",
+          "timestamp"
+        ],
+        "type": "object"
+      },
+      "WeatherStation": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "readOnly": true,
+            "type": "integer"
+          },
+          "location": {
+            "description": "WKT point, e.g. SRID=4326;POINT (lng lat)",
+            "nullable": true,
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 255,
+            "type": "string"
+          }
+        },
+        "required": [
+          "created_at",
+          "id",
+          "name"
+        ],
+        "type": "object"
+      },
+      "WeatherUploadResponse": {
+        "properties": {
+          "observations_created": {
+            "type": "integer"
+          },
+          "station_id": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "time_range": {
+            "additionalProperties": {},
+            "type": "object"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "observations_created",
+          "station_id",
+          "success",
+          "time_range"
+        ],
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "basicAuth": {
+        "scheme": "basic",
+        "type": "http"
+      },
+      "cookieAuth": {
+        "in": "cookie",
+        "name": "sessionid",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "Yacht monitoring and GPS track management API with PostGIS",
+    "title": "Moana API",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/api/gear/checklist-state/": {
+      "get": {
+        "description": "Singleton endpoint: GET to read, PATCH to update selected tags.",
+        "operationId": "gear_checklist_state_retrieve",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChecklistState"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      },
+      "patch": {
+        "description": "Singleton endpoint: GET to read, PATCH to update selected tags.",
+        "operationId": "gear_checklist_state_partial_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedChecklistState"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedChecklistState"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedChecklistState"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChecklistState"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      }
+    },
+    "/api/gear/items/": {
+      "get": {
+        "operationId": "gear_items_list",
+        "parameters": [
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedItemList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      },
+      "post": {
+        "operationId": "gear_items_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      }
+    },
+    "/api/gear/items/reset-done/": {
+      "post": {
+        "operationId": "gear_items_reset_done_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      }
+    },
+    "/api/gear/items/{id}/": {
+      "delete": {
+        "operationId": "gear_items_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this item.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      },
+      "get": {
+        "operationId": "gear_items_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this item.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      },
+      "patch": {
+        "operationId": "gear_items_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this item.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedItem"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedItem"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      },
+      "put": {
+        "operationId": "gear_items_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this item.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      }
+    },
+    "/api/gear/tags/": {
+      "get": {
+        "operationId": "gear_tags_list",
+        "parameters": [
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedTagList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      },
+      "post": {
+        "operationId": "gear_tags_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tag"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Tag"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Tag"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      }
+    },
+    "/api/gear/tags/{id}/": {
+      "delete": {
+        "operationId": "gear_tags_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this tag.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      },
+      "get": {
+        "operationId": "gear_tags_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this tag.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      },
+      "patch": {
+        "operationId": "gear_tags_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this tag.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedTag"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedTag"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedTag"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      },
+      "put": {
+        "operationId": "gear_tags_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this tag.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tag"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Tag"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Tag"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "gear"
+        ]
+      }
+    },
+    "/api/me/": {
+      "get": {
+        "description": "Return the current user's identity and role. Used by the Vue frontend.\n\n`@ensure_csrf_cookie` guarantees the csrftoken cookie is set on the\nresponse so subsequent unsafe requests (POST/PATCH/PUT/DELETE) from the\nSPA can include the matching X-CSRFToken header.",
+        "operationId": "me_retrieve",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeResponse"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "me"
+        ]
+      }
+    },
+    "/api/schema/": {
+      "get": {
+        "description": "OpenApi3 schema for this API. Format can be selected via content negotiation.\n\n- YAML: application/vnd.oai.openapi\n- JSON: application/vnd.oai.openapi+json",
+        "operationId": "schema_retrieve",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "format",
+            "schema": {
+              "enum": [
+                "json",
+                "yaml"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "lang",
+            "schema": {
+              "enum": [
+                "af",
+                "ar",
+                "ar-dz",
+                "ast",
+                "az",
+                "be",
+                "bg",
+                "bn",
+                "br",
+                "bs",
+                "ca",
+                "ckb",
+                "cs",
+                "cy",
+                "da",
+                "de",
+                "dsb",
+                "el",
+                "en",
+                "en-au",
+                "en-gb",
+                "eo",
+                "es",
+                "es-ar",
+                "es-co",
+                "es-mx",
+                "es-ni",
+                "es-ve",
+                "et",
+                "eu",
+                "fa",
+                "fi",
+                "fr",
+                "fy",
+                "ga",
+                "gd",
+                "gl",
+                "he",
+                "hi",
+                "hr",
+                "hsb",
+                "ht",
+                "hu",
+                "hy",
+                "ia",
+                "id",
+                "ig",
+                "io",
+                "is",
+                "it",
+                "ja",
+                "ka",
+                "kab",
+                "kk",
+                "km",
+                "kn",
+                "ko",
+                "ky",
+                "lb",
+                "lt",
+                "lv",
+                "mk",
+                "ml",
+                "mn",
+                "mr",
+                "ms",
+                "my",
+                "nb",
+                "ne",
+                "nl",
+                "nn",
+                "os",
+                "pa",
+                "pl",
+                "pt",
+                "pt-br",
+                "ro",
+                "ru",
+                "sk",
+                "sl",
+                "sq",
+                "sr",
+                "sr-latn",
+                "sv",
+                "sw",
+                "ta",
+                "te",
+                "tg",
+                "th",
+                "tk",
+                "tr",
+                "tt",
+                "udm",
+                "ug",
+                "uk",
+                "ur",
+                "uz",
+                "vi",
+                "zh-hans",
+                "zh-hant"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {},
+                  "type": "object"
+                }
+              },
+              "application/vnd.oai.openapi": {
+                "schema": {
+                  "additionalProperties": {},
+                  "type": "object"
+                }
+              },
+              "application/vnd.oai.openapi+json": {
+                "schema": {
+                  "additionalProperties": {},
+                  "type": "object"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "additionalProperties": {},
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "schema"
+        ]
+      }
+    },
+    "/api/tracks/aboard/": {
+      "get": {
+        "description": "API endpoint for aboard records.\n\nlist: Get all aboard records (filter by ?vessel=:id, ?person=:id, ?current=true)\ncreate: Create a new aboard record\nretrieve: Get aboard detail\nupdate: Update aboard record\npartial_update: Partially update aboard record\ndestroy: Delete aboard record",
+        "operationId": "tracks_aboard_list",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "current",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "person",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "vessel",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedAboardList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "post": {
+        "description": "API endpoint for aboard records.\n\nlist: Get all aboard records (filter by ?vessel=:id, ?person=:id, ?current=true)\ncreate: Create a new aboard record\nretrieve: Get aboard detail\nupdate: Update aboard record\npartial_update: Partially update aboard record\ndestroy: Delete aboard record",
+        "operationId": "tracks_aboard_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Aboard"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Aboard"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Aboard"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Aboard"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/aboard/{id}/": {
+      "delete": {
+        "description": "API endpoint for aboard records.\n\nlist: Get all aboard records (filter by ?vessel=:id, ?person=:id, ?current=true)\ncreate: Create a new aboard record\nretrieve: Get aboard detail\nupdate: Update aboard record\npartial_update: Partially update aboard record\ndestroy: Delete aboard record",
+        "operationId": "tracks_aboard_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this aboard.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "description": "API endpoint for aboard records.\n\nlist: Get all aboard records (filter by ?vessel=:id, ?person=:id, ?current=true)\ncreate: Create a new aboard record\nretrieve: Get aboard detail\nupdate: Update aboard record\npartial_update: Partially update aboard record\ndestroy: Delete aboard record",
+        "operationId": "tracks_aboard_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this aboard.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Aboard"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "patch": {
+        "description": "API endpoint for aboard records.\n\nlist: Get all aboard records (filter by ?vessel=:id, ?person=:id, ?current=true)\ncreate: Create a new aboard record\nretrieve: Get aboard detail\nupdate: Update aboard record\npartial_update: Partially update aboard record\ndestroy: Delete aboard record",
+        "operationId": "tracks_aboard_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this aboard.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedAboard"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedAboard"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedAboard"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Aboard"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "put": {
+        "description": "API endpoint for aboard records.\n\nlist: Get all aboard records (filter by ?vessel=:id, ?person=:id, ?current=true)\ncreate: Create a new aboard record\nretrieve: Get aboard detail\nupdate: Update aboard record\npartial_update: Partially update aboard record\ndestroy: Delete aboard record",
+        "operationId": "tracks_aboard_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this aboard.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Aboard"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Aboard"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Aboard"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Aboard"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/annotations/": {
+      "get": {
+        "description": "API endpoint for annotations.\n\nlist: Get all annotations (filter by ?vessel=:id, ?type=:type)\ncreate: Create a new annotation\nretrieve: Get annotation detail\nupdate: Update annotation\npartial_update: Partially update annotation\ndestroy: Delete annotation",
+        "operationId": "tracks_annotations_list",
+        "parameters": [
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "timestamp_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "timestamp_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "vessel",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedAnnotationList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "post": {
+        "description": "API endpoint for annotations.\n\nlist: Get all annotations (filter by ?vessel=:id, ?type=:type)\ncreate: Create a new annotation\nretrieve: Get annotation detail\nupdate: Update annotation\npartial_update: Partially update annotation\ndestroy: Delete annotation",
+        "operationId": "tracks_annotations_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Annotation"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Annotation"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Annotation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Annotation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/annotations/{id}/": {
+      "delete": {
+        "description": "API endpoint for annotations.\n\nlist: Get all annotations (filter by ?vessel=:id, ?type=:type)\ncreate: Create a new annotation\nretrieve: Get annotation detail\nupdate: Update annotation\npartial_update: Partially update annotation\ndestroy: Delete annotation",
+        "operationId": "tracks_annotations_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this annotation.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "description": "API endpoint for annotations.\n\nlist: Get all annotations (filter by ?vessel=:id, ?type=:type)\ncreate: Create a new annotation\nretrieve: Get annotation detail\nupdate: Update annotation\npartial_update: Partially update annotation\ndestroy: Delete annotation",
+        "operationId": "tracks_annotations_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this annotation.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Annotation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "patch": {
+        "description": "API endpoint for annotations.\n\nlist: Get all annotations (filter by ?vessel=:id, ?type=:type)\ncreate: Create a new annotation\nretrieve: Get annotation detail\nupdate: Update annotation\npartial_update: Partially update annotation\ndestroy: Delete annotation",
+        "operationId": "tracks_annotations_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this annotation.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedAnnotation"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedAnnotation"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedAnnotation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Annotation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "put": {
+        "description": "API endpoint for annotations.\n\nlist: Get all annotations (filter by ?vessel=:id, ?type=:type)\ncreate: Create a new annotation\nretrieve: Get annotation detail\nupdate: Update annotation\npartial_update: Partially update annotation\ndestroy: Delete annotation",
+        "operationId": "tracks_annotations_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this annotation.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Annotation"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Annotation"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Annotation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Annotation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/device/track": {
+      "delete": {
+        "description": "Proxy ``GET /track?file=`` (download) and ``DELETE /track?file=`` on the device.",
+        "operationId": "tracks_device_track_destroy",
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "description": "Proxy ``GET /track?file=`` (download) and ``DELETE /track?file=`` on the device.",
+        "operationId": "tracks_device_track_retrieve",
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/device/tracks/list": {
+      "get": {
+        "description": "Proxy ``GET /tracks/list`` on the device.",
+        "operationId": "tracks_device_tracks_list_retrieve",
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/": {
+      "get": {
+        "description": "API endpoint for journeys.\n\nlist: Get all journeys (filter by ?vessel=:id, ?ongoing=true)\ncreate: Create a new journey\nretrieve: Get journey detail (with nested legs)\nupdate: Update journey\npartial_update: Partially update journey\ndestroy: Delete journey\ndetail: Get journey with all related data (modes, annotations, aboard, tracks summary)\ntracks: Get track point data in GeoJSON format",
+        "operationId": "tracks_journeys_list",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "ongoing",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "vessel",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedJourneyList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "post": {
+        "description": "API endpoint for journeys.\n\nlist: Get all journeys (filter by ?vessel=:id, ?ongoing=true)\ncreate: Create a new journey\nretrieve: Get journey detail (with nested legs)\nupdate: Update journey\npartial_update: Partially update journey\ndestroy: Delete journey\ndetail: Get journey with all related data (modes, annotations, aboard, tracks summary)\ntracks: Get track point data in GeoJSON format",
+        "operationId": "tracks_journeys_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Journey"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Journey"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Journey"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Journey"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/{id}/": {
+      "delete": {
+        "description": "API endpoint for journeys.\n\nlist: Get all journeys (filter by ?vessel=:id, ?ongoing=true)\ncreate: Create a new journey\nretrieve: Get journey detail (with nested legs)\nupdate: Update journey\npartial_update: Partially update journey\ndestroy: Delete journey\ndetail: Get journey with all related data (modes, annotations, aboard, tracks summary)\ntracks: Get track point data in GeoJSON format",
+        "operationId": "tracks_journeys_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "description": "API endpoint for journeys.\n\nlist: Get all journeys (filter by ?vessel=:id, ?ongoing=true)\ncreate: Create a new journey\nretrieve: Get journey detail (with nested legs)\nupdate: Update journey\npartial_update: Partially update journey\ndestroy: Delete journey\ndetail: Get journey with all related data (modes, annotations, aboard, tracks summary)\ntracks: Get track point data in GeoJSON format",
+        "operationId": "tracks_journeys_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JourneyDetail"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "patch": {
+        "description": "API endpoint for journeys.\n\nlist: Get all journeys (filter by ?vessel=:id, ?ongoing=true)\ncreate: Create a new journey\nretrieve: Get journey detail (with nested legs)\nupdate: Update journey\npartial_update: Partially update journey\ndestroy: Delete journey\ndetail: Get journey with all related data (modes, annotations, aboard, tracks summary)\ntracks: Get track point data in GeoJSON format",
+        "operationId": "tracks_journeys_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedJourney"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedJourney"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedJourney"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Journey"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "put": {
+        "description": "API endpoint for journeys.\n\nlist: Get all journeys (filter by ?vessel=:id, ?ongoing=true)\ncreate: Create a new journey\nretrieve: Get journey detail (with nested legs)\nupdate: Update journey\npartial_update: Partially update journey\ndestroy: Delete journey\ndetail: Get journey with all related data (modes, annotations, aboard, tracks summary)\ntracks: Get track point data in GeoJSON format",
+        "operationId": "tracks_journeys_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Journey"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Journey"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Journey"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Journey"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/{id}/aboard/": {
+      "get": {
+        "description": "Get aboard records overlapping the journey timeframe.",
+        "operationId": "tracks_journeys_aboard_list",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "ongoing",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "vessel",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedAboardList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/{id}/annotations/": {
+      "get": {
+        "description": "Get annotations within the journey timeframe.",
+        "operationId": "tracks_journeys_annotations_list",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "ongoing",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "vessel",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedAnnotationList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/{id}/modes/": {
+      "get": {
+        "description": "Get modes within the journey timeframe.",
+        "operationId": "tracks_journeys_modes_list",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "ongoing",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "vessel",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedModeList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/{id}/photos/": {
+      "get": {
+        "description": "List Immich photos and videos taken during the journey window (±2h).",
+        "operationId": "tracks_journeys_photos_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {},
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/{id}/photos/{asset_id}/preview/": {
+      "get": {
+        "description": "Proxy a preview for a single Immich asset through Django.",
+        "operationId": "tracks_journeys_photos_preview_retrieve",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "asset_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/*": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/{id}/photos/{asset_id}/thumb/": {
+      "get": {
+        "description": "Proxy a thumbnail for a single Immich asset through Django.",
+        "operationId": "tracks_journeys_photos_thumb_retrieve",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "asset_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/*": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/{id}/preview/": {
+      "get": {
+        "description": "Get a static map PNG thumbnail of the journey's track.",
+        "operationId": "tracks_journeys_preview_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Zoom level (default: region)",
+            "in": "query",
+            "name": "zoom",
+            "schema": {
+              "enum": [
+                "detail",
+                "region"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/png": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": ""
+          },
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/{id}/tracks/": {
+      "get": {
+        "description": "Get track points within journey timeframe as GeoJSON FeatureCollection. Weather observations are automatically joined when the journey has a weather station.",
+        "operationId": "tracks_journeys_tracks_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {},
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/journeys/{id}/weather-summary/": {
+      "get": {
+        "description": "Get summary statistics for the journey's weather station over the journey window.",
+        "operationId": "tracks_journeys_weather_summary_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this journey.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {},
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/legs/": {
+      "get": {
+        "description": "API endpoint for legs.\n\nlist: Get all legs (filter by ?journey=:id)\ncreate: Create a new leg\nretrieve: Get leg detail\nupdate: Update leg\npartial_update: Partially update leg\ndestroy: Delete leg",
+        "operationId": "tracks_legs_list",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "journey",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedLegList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "post": {
+        "description": "API endpoint for legs.\n\nlist: Get all legs (filter by ?journey=:id)\ncreate: Create a new leg\nretrieve: Get leg detail\nupdate: Update leg\npartial_update: Partially update leg\ndestroy: Delete leg",
+        "operationId": "tracks_legs_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Leg"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Leg"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Leg"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Leg"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/legs/{id}/": {
+      "delete": {
+        "description": "API endpoint for legs.\n\nlist: Get all legs (filter by ?journey=:id)\ncreate: Create a new leg\nretrieve: Get leg detail\nupdate: Update leg\npartial_update: Partially update leg\ndestroy: Delete leg",
+        "operationId": "tracks_legs_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this leg.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "description": "API endpoint for legs.\n\nlist: Get all legs (filter by ?journey=:id)\ncreate: Create a new leg\nretrieve: Get leg detail\nupdate: Update leg\npartial_update: Partially update leg\ndestroy: Delete leg",
+        "operationId": "tracks_legs_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this leg.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Leg"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "patch": {
+        "description": "API endpoint for legs.\n\nlist: Get all legs (filter by ?journey=:id)\ncreate: Create a new leg\nretrieve: Get leg detail\nupdate: Update leg\npartial_update: Partially update leg\ndestroy: Delete leg",
+        "operationId": "tracks_legs_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this leg.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedLeg"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedLeg"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedLeg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Leg"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "put": {
+        "description": "API endpoint for legs.\n\nlist: Get all legs (filter by ?journey=:id)\ncreate: Create a new leg\nretrieve: Get leg detail\nupdate: Update leg\npartial_update: Partially update leg\ndestroy: Delete leg",
+        "operationId": "tracks_legs_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this leg.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Leg"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Leg"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Leg"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Leg"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/modes/": {
+      "get": {
+        "description": "API endpoint for modes.\n\nlist: Get all modes (filter by ?vessel=:id, ?mode=:type)\ncreate: Create a new mode\nretrieve: Get mode detail\nupdate: Update mode\npartial_update: Partially update mode\ndestroy: Delete mode",
+        "operationId": "tracks_modes_list",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "mode",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "vessel",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedModeList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "post": {
+        "description": "API endpoint for modes.\n\nlist: Get all modes (filter by ?vessel=:id, ?mode=:type)\ncreate: Create a new mode\nretrieve: Get mode detail\nupdate: Update mode\npartial_update: Partially update mode\ndestroy: Delete mode",
+        "operationId": "tracks_modes_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mode"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Mode"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Mode"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mode"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/modes/{id}/": {
+      "delete": {
+        "description": "API endpoint for modes.\n\nlist: Get all modes (filter by ?vessel=:id, ?mode=:type)\ncreate: Create a new mode\nretrieve: Get mode detail\nupdate: Update mode\npartial_update: Partially update mode\ndestroy: Delete mode",
+        "operationId": "tracks_modes_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this mode.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "description": "API endpoint for modes.\n\nlist: Get all modes (filter by ?vessel=:id, ?mode=:type)\ncreate: Create a new mode\nretrieve: Get mode detail\nupdate: Update mode\npartial_update: Partially update mode\ndestroy: Delete mode",
+        "operationId": "tracks_modes_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this mode.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mode"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "patch": {
+        "description": "API endpoint for modes.\n\nlist: Get all modes (filter by ?vessel=:id, ?mode=:type)\ncreate: Create a new mode\nretrieve: Get mode detail\nupdate: Update mode\npartial_update: Partially update mode\ndestroy: Delete mode",
+        "operationId": "tracks_modes_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this mode.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedMode"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedMode"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedMode"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mode"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "put": {
+        "description": "API endpoint for modes.\n\nlist: Get all modes (filter by ?vessel=:id, ?mode=:type)\ncreate: Create a new mode\nretrieve: Get mode detail\nupdate: Update mode\npartial_update: Partially update mode\ndestroy: Delete mode",
+        "operationId": "tracks_modes_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this mode.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mode"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Mode"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Mode"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mode"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/people/": {
+      "get": {
+        "description": "API endpoint for people.\n\nlist: Get all people\ncreate: Create a new person\nretrieve: Get person detail\nupdate: Update person\npartial_update: Partially update person\ndestroy: Delete person",
+        "operationId": "tracks_people_list",
+        "parameters": [
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedPersonList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "post": {
+        "description": "API endpoint for people.\n\nlist: Get all people\ncreate: Create a new person\nretrieve: Get person detail\nupdate: Update person\npartial_update: Partially update person\ndestroy: Delete person",
+        "operationId": "tracks_people_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/people/{id}/": {
+      "delete": {
+        "description": "API endpoint for people.\n\nlist: Get all people\ncreate: Create a new person\nretrieve: Get person detail\nupdate: Update person\npartial_update: Partially update person\ndestroy: Delete person",
+        "operationId": "tracks_people_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this person.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "description": "API endpoint for people.\n\nlist: Get all people\ncreate: Create a new person\nretrieve: Get person detail\nupdate: Update person\npartial_update: Partially update person\ndestroy: Delete person",
+        "operationId": "tracks_people_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this person.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "patch": {
+        "description": "API endpoint for people.\n\nlist: Get all people\ncreate: Create a new person\nretrieve: Get person detail\nupdate: Update person\npartial_update: Partially update person\ndestroy: Delete person",
+        "operationId": "tracks_people_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this person.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedPerson"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedPerson"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedPerson"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "put": {
+        "description": "API endpoint for people.\n\nlist: Get all people\ncreate: Create a new person\nretrieve: Get person detail\nupdate: Update person\npartial_update: Partially update person\ndestroy: Delete person",
+        "operationId": "tracks_people_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this person.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/people/{id}/history/": {
+      "get": {
+        "description": "Get aboard history for this person.",
+        "operationId": "tracks_people_history_list",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this person.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedAboardList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/track-points/{id}/": {
+      "delete": {
+        "description": "Destroy-only endpoint for individual GPS points.\n\ndestroy: Hard-delete a point from its track and remove any annotations\nor modes pinned to the exact same (vessel, timestamp). Journeys are\ncomputed from vessel + time window, so the point disappears from every\njourney automatically.",
+        "operationId": "tracks_track_points_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this track point.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/tracks/": {
+      "get": {
+        "description": "API endpoint for tracks.\n\nlist: Get all tracks (filter by ?vessel=:id)\ncreate: Create a new track\nretrieve: Get track detail\nupdate: Update track\npartial_update: Partially update track\ndestroy: Delete track\npoints: Get track points for a specific track\nupload_csv: Upload a CSV file to create a track with points",
+        "operationId": "tracks_tracks_list",
+        "parameters": [
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "vessel",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedTrackList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "post": {
+        "description": "API endpoint for tracks.\n\nlist: Get all tracks (filter by ?vessel=:id)\ncreate: Create a new track\nretrieve: Get track detail\nupdate: Update track\npartial_update: Partially update track\ndestroy: Delete track\npoints: Get track points for a specific track\nupload_csv: Upload a CSV file to create a track with points",
+        "operationId": "tracks_tracks_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Track"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Track"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Track"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Track"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/tracks/upload-csv/": {
+      "post": {
+        "description": "Upload a CSV file containing GPS track points.\n\nExpected CSV format:\nlat,lng,speed,satellites,altitude,hdop,course,gps_date,gps_time\n\nForm fields:\n- file: CSV file (required)\n- events: events sidecar (JSONL) recorded alongside the track\n  (optional) — one {\"kind\": <mode name>, \"utc\": <epoch>} object per\n  line, ingested as Mode rows (issue #139). `kind` is any\n  Mode.MODE_CHOICES value (see events_jsonl.MODE_KINDS); the watch can\n  set all of them since issue #146. Requires a vessel (Mode is\n  vessel-anchored); idempotent on re-upload. Bursts of presses within\n  events_jsonl.MODE_DEBOUNCE_SECONDS collapse to one Mode row each\n  (issue #161) and say so in `warnings`.\n- name: Track name (optional)\n- description: Track description (optional)\n- vessel: Vessel ID (optional)",
+        "operationId": "tracks_tracks_upload_csv_create",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "events": {
+                    "description": "Optional events sidecar (JSONL) recorded alongside the track",
+                    "format": "binary",
+                    "type": "string"
+                  },
+                  "file": {
+                    "description": "CSV file",
+                    "format": "binary",
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "vessel": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "file"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackUploadResponse"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/tracks/{id}/": {
+      "delete": {
+        "description": "API endpoint for tracks.\n\nlist: Get all tracks (filter by ?vessel=:id)\ncreate: Create a new track\nretrieve: Get track detail\nupdate: Update track\npartial_update: Partially update track\ndestroy: Delete track\npoints: Get track points for a specific track\nupload_csv: Upload a CSV file to create a track with points",
+        "operationId": "tracks_tracks_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this track.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "description": "API endpoint for tracks.\n\nlist: Get all tracks (filter by ?vessel=:id)\ncreate: Create a new track\nretrieve: Get track detail\nupdate: Update track\npartial_update: Partially update track\ndestroy: Delete track\npoints: Get track points for a specific track\nupload_csv: Upload a CSV file to create a track with points",
+        "operationId": "tracks_tracks_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this track.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackDetail"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "patch": {
+        "description": "API endpoint for tracks.\n\nlist: Get all tracks (filter by ?vessel=:id)\ncreate: Create a new track\nretrieve: Get track detail\nupdate: Update track\npartial_update: Partially update track\ndestroy: Delete track\npoints: Get track points for a specific track\nupload_csv: Upload a CSV file to create a track with points",
+        "operationId": "tracks_tracks_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this track.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedTrack"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedTrack"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedTrack"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Track"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "put": {
+        "description": "API endpoint for tracks.\n\nlist: Get all tracks (filter by ?vessel=:id)\ncreate: Create a new track\nretrieve: Get track detail\nupdate: Update track\npartial_update: Partially update track\ndestroy: Delete track\npoints: Get track points for a specific track\nupload_csv: Upload a CSV file to create a track with points",
+        "operationId": "tracks_tracks_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this track.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Track"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Track"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Track"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Track"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/tracks/{id}/geojson/": {
+      "get": {
+        "description": "Get all track points as a GeoJSON FeatureCollection.",
+        "operationId": "tracks_tracks_geojson_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this track.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Weather station ID to join nearest observations",
+            "in": "query",
+            "name": "weather_station",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {},
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/tracks/{id}/points/": {
+      "get": {
+        "description": "Get all track points for this track.",
+        "operationId": "tracks_tracks_points_list",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this track.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "started_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "vessel",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedTrackPointList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/tracks/{id}/preview/": {
+      "get": {
+        "description": "Get a static map PNG thumbnail of the track.",
+        "operationId": "tracks_tracks_preview_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this track.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Zoom level (default: region)",
+            "in": "query",
+            "name": "zoom",
+            "schema": {
+              "enum": [
+                "detail",
+                "region"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/png": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": ""
+          },
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/vessels/": {
+      "get": {
+        "description": "API endpoint for vessels.\n\nlist: Get all vessels\ncreate: Create a new vessel\nretrieve: Get vessel detail\nupdate: Update vessel\npartial_update: Partially update vessel\ndestroy: Delete vessel",
+        "operationId": "tracks_vessels_list",
+        "parameters": [
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedVesselList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "post": {
+        "description": "API endpoint for vessels.\n\nlist: Get all vessels\ncreate: Create a new vessel\nretrieve: Get vessel detail\nupdate: Update vessel\npartial_update: Partially update vessel\ndestroy: Delete vessel",
+        "operationId": "tracks_vessels_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Vessel"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Vessel"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Vessel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vessel"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/vessels/{id}/": {
+      "delete": {
+        "description": "API endpoint for vessels.\n\nlist: Get all vessels\ncreate: Create a new vessel\nretrieve: Get vessel detail\nupdate: Update vessel\npartial_update: Partially update vessel\ndestroy: Delete vessel",
+        "operationId": "tracks_vessels_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this vessel.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "description": "API endpoint for vessels.\n\nlist: Get all vessels\ncreate: Create a new vessel\nretrieve: Get vessel detail\nupdate: Update vessel\npartial_update: Partially update vessel\ndestroy: Delete vessel",
+        "operationId": "tracks_vessels_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this vessel.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vessel"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "patch": {
+        "description": "API endpoint for vessels.\n\nlist: Get all vessels\ncreate: Create a new vessel\nretrieve: Get vessel detail\nupdate: Update vessel\npartial_update: Partially update vessel\ndestroy: Delete vessel",
+        "operationId": "tracks_vessels_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this vessel.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedVessel"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedVessel"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedVessel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vessel"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "put": {
+        "description": "API endpoint for vessels.\n\nlist: Get all vessels\ncreate: Create a new vessel\nretrieve: Get vessel detail\nupdate: Update vessel\npartial_update: Partially update vessel\ndestroy: Delete vessel",
+        "operationId": "tracks_vessels_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this vessel.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Vessel"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Vessel"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Vessel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vessel"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/weather-observations/": {
+      "get": {
+        "operationId": "tracks_weather_observations_list",
+        "parameters": [
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "station",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "timestamp_after",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "timestamp_before",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedWeatherObservationList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "post": {
+        "operationId": "tracks_weather_observations_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherObservation"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherObservation"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherObservation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherObservation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/weather-observations/{id}/": {
+      "delete": {
+        "operationId": "tracks_weather_observations_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this weather observation.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "operationId": "tracks_weather_observations_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this weather observation.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherObservation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "patch": {
+        "operationId": "tracks_weather_observations_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this weather observation.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedWeatherObservation"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedWeatherObservation"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedWeatherObservation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherObservation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "put": {
+        "operationId": "tracks_weather_observations_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this weather observation.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherObservation"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherObservation"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherObservation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherObservation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/weather-stations/": {
+      "get": {
+        "operationId": "tracks_weather_stations_list",
+        "parameters": [
+          {
+            "description": "Which field to use when ordering the results.",
+            "in": "query",
+            "name": "ordering",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A page number within the paginated result set.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "A search term.",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedWeatherStationList"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "post": {
+        "operationId": "tracks_weather_stations_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherStation"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherStation"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherStation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherStation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/weather-stations/{id}/": {
+      "delete": {
+        "operationId": "tracks_weather_stations_destroy",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this weather station.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "get": {
+        "operationId": "tracks_weather_stations_retrieve",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this weather station.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherStation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "patch": {
+        "operationId": "tracks_weather_stations_partial_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this weather station.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedWeatherStation"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedWeatherStation"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedWeatherStation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherStation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      },
+      "put": {
+        "operationId": "tracks_weather_stations_update",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this weather station.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherStation"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherStation"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherStation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherStation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    },
+    "/api/tracks/weather-stations/{id}/upload-csv/": {
+      "post": {
+        "description": "Upload a weather CSV file for this station.\n\nExpected CSV columns: Time, Temperature (°C), Rain Accumulation (mm),\nWind Direction (°), Wind Speed (kn), Gust Speed (kn), Humidity (%),\nTide Observation (m)",
+        "operationId": "tracks_weather_stations_upload_csv_create",
+        "parameters": [
+          {
+            "description": "A unique integer value identifying this weather station.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "file": {
+                    "description": "Weather CSV file",
+                    "format": "binary",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherUploadResponse"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "tags": [
+          "tracks"
+        ]
+      }
+    }
+  }
+}

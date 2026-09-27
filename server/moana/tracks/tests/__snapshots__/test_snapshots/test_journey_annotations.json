@@ -1,0 +1,20 @@
+[
+  {
+    "id": "<pk>",
+    "metadata": {},
+    "notes": "",
+    "timestamp": "2026-01-04T10:30:00Z",
+    "type": "TACK",
+    "type_display": "Tack",
+    "vessel": "<fk>"
+  },
+  {
+    "id": "<pk>",
+    "metadata": {},
+    "notes": "",
+    "timestamp": "2026-01-04T11:00:00Z",
+    "type": "GYBE",
+    "type_display": "Gybe",
+    "vessel": "<fk>"
+  }
+]

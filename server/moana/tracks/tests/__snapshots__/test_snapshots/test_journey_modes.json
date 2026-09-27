@@ -1,0 +1,35 @@
+[
+  {
+    "duration": 3600.0,
+    "ended_at": "2026-01-04T10:00:00+00:00",
+    "id": "<pk>",
+    "metadata": {},
+    "mode": "MOTOR",
+    "mode_display": "Motoring",
+    "notes": "",
+    "started_at": "2026-01-04T09:00:00Z",
+    "vessel": "<fk>"
+  },
+  {
+    "duration": 14400.0,
+    "ended_at": "2026-01-04T14:00:00+00:00",
+    "id": "<pk>",
+    "metadata": {},
+    "mode": "SAIL",
+    "mode_display": "Sailing",
+    "notes": "",
+    "started_at": "2026-01-04T10:00:00Z",
+    "vessel": "<fk>"
+  },
+  {
+    "duration": null,
+    "ended_at": "2026-01-04T14:00:00+00:00",
+    "id": "<pk>",
+    "metadata": {},
+    "mode": "ANCHOR",
+    "mode_display": "Anchored",
+    "notes": "",
+    "started_at": "2026-01-04T14:00:00Z",
+    "vessel": "<fk>"
+  }
+]
