@@ -51,7 +51,7 @@ matplotlib==3.10.8
 mercantile==1.2.1
 numpy==2.4.2
 packaging==26.0
-pandas==3.0.0
+pandas==3.0.6
 pillow==12.1.1
 pluggy==1.6.0
 psycopg-binary==3.3.2
