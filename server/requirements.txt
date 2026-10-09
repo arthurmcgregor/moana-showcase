@@ -42,7 +42,7 @@ geopy==2.4.1
 gunicorn==26.2.0
 idna==3.11
 inflection==0.5.1
-iniconfig==2.3.0
+iniconfig==2.3.1
 joblib==1.5.3
 jsonschema-specifications==2025.9.1
 jsonschema==4.26.0
