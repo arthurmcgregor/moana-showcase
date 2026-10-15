@@ -1,5 +1,5 @@
 # ---- Builder stage ----
-FROM python:3.14-bookworm AS builder
+FROM python:3.15-bookworm AS builder
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
@@ -19,7 +19,7 @@ COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 # ---- Runtime stage ----
-FROM python:3.14-slim-bookworm
+FROM python:3.15-slim-bookworm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gdal-bin \
